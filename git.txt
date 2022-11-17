@@ -1,0 +1,137 @@
+git基本使用
+最开始需要先设置用户签名
+git config --global user.name 用户名
+git config --global user.email 邮箱
+说明：
+签名的作用是区分不同操作者身份。用户的签名信息在每一个版本的提交信息中能够看
+到，以此确认本次提交是谁做的。Git 首次安装必须设置一下用户签名，否则无法提交代码。
+
+git初始化本地库
+git init
+初始化完毕后会在库中生成一个隐藏的.git文件
+
+git查看本地库状态
+git status
+可以看到文件的状态已经提交或者未提交
+
+git将文件添加到缓存区
+git add 文件名
+
+git将文件提交到本地库
+git commit -m “说明”文件名
+
+git查看历史版本
+1.git log （详细版本）
+2.git reflog（粗略信息）
+
+git使用提交过的其他版本
+git reset --hard 版本号
+（版本的改变本质时移动head指针）
+
+git分支操作
+什么是分支：
+在版本控制过程中，同时推进多个任务，为每个任务，我们就可以创建每个任务的单独
+分支。使用分支意味着程序员可以把自己的工作从开发主线上分离开来，开发自己分支的时
+候，不会影响主线分支的运行。对于初学者而言，分支可以简单理解为副本，一个分支就是
+一个单独的副本。（分支底层其实也是指针的引用）
+好处：
+同时并行推进多个功能开发，提高开发效率。
+各个分支在开发过程中，如果某一个分支开发失败，不会对其他分支有任何影响。失败
+的分支删除重新开始即可
+
+git查看分支
+git branch -v
+
+git创建分支
+git branch 分支名
+
+git切换分支
+git checkout 分支名
+
+git合并分支
+（站在某一个分支上去合并（兼并）另一个分支使其成为自己的一部分）
+git merge 分支名
+
+
+分支冲突：
+原因：
+合并分支时，两个分支在同一个文件的同一个位置有两套完全不同的修改。Git 无法替
+我们决定使用哪一个。必须人为决定新代码内容。
+查看状态（检测到有文件有两处修改）
+解决方法：
+）编辑有冲突的文件，删除特殊符号，决定要使用的内容
+特殊符号：<<<<<<< HEAD 当前分支的代码 ======= 合并过来的代码 >>>>>>> hot-fix
+之后需添加到缓存区
+执行提交时不能带文件名
+
+
+github远程仓库操作
+
+git给远程仓库起别名\查看所有别名
+git remote add 别名 远程仓库地址
+git remote -v
+ 
+git推送本地文件到远程仓库
+git push 别名 分支
+
+
+git克隆远程仓库到本地
+git clone 远程地址
+
+git拉取远程仓库的内容
+git pull 远程仓库别名 远程分支名
+
+SSH免密登录
+步骤：
+在当前用户下删除.ssh目录（没有就不用）
+运行命令生成.ssh密匙目录
+ ssh-keygen -t ed25519-C atguiguyueyue@aliyun.com
+连点三下enter
+进入.ssh文件目录
+查看并复制id_ed25519.pub
+登录 GitHub，点击用户头像→Settings→SSH and GPG keys
+接下来再往远程仓库 push 东西的时候使用 SSH 连接就不需要登录了
+
+idea配置git
+配置忽略文件
+格式XXXX.ignore
+放置在当前用户目录下
+模板：
+# Compiled class file
+*.class
+# Log file
+*.log
+# BlueJ files
+*.ctxt
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+# virtual machine crash logs, see
+http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+.classpath
+.project
+.settings
+target
+.idea
+*.iml
+之后在.gitconfig中引用忽略配置文件
+[core]
+excludesfile = C:/Users/asus/git.ignore
+
+
+配置git
+新建maven项目，file-settings-version control-git 选择自己的安装目录 sshexecutable 选择另一个-点击测试-apply
+初始化
+vcs-importintovc-create git repository选择项目文件
+右键-git-add将项目添加到暂存区
+右键-git-commitdirectory...提交到本地库
+查看版本
+在版本上右键点击 Checkout Revision切换版本
